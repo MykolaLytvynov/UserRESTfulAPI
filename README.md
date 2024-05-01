@@ -32,12 +32,13 @@ A RESTful API for managing the user entities.  Code is covered by unit tests usi
 3. Run the application using Maven or your IDE's run configuration.
 
 ## API Endpoints
+- **GET /users:** Retrieve a list of users.
+- **GET /users/{id}:** Retrieve a user by ID.
+- **GET /users/birthdate-range?from=1990-12-21&to=2000-12-21:** Search for users by birth date range. Use two parameters(from, to)
 - **POST /users:** Create a new user.
-- **PUT /users/{id}:** Update all fields of a user by ID.
 - **PATCH /users/{id}:** Update specific fields of a user by ID.
 - **DELETE /users/{id}:** Delete a user by ID.
-- **GET /users:** Retrieve a list of users.
-- **GET /users/birthdate-range?from=1990-12-21&to=2000-12-21:** Search for users by birth date range. Use two parameters(from, to)
+
 
 ## Example JSON Request to create user
 ```json
