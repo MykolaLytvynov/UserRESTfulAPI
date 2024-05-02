@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import ua.mykola.UserRESTfulAPI.rest.dto.UserDto;
 import ua.mykola.UserRESTfulAPI.rest.validation.CreateValidation;
 import ua.mykola.UserRESTfulAPI.rest.validation.UpdateValidation;
-import ua.mykola.UserRESTfulAPI.exception.NotFoundException;
-import ua.mykola.UserRESTfulAPI.exception.UnderagePersonException;
 import ua.mykola.UserRESTfulAPI.exception.ValidationException;
 import ua.mykola.UserRESTfulAPI.service.UserService;
 
@@ -55,7 +53,6 @@ public class UserController {
      *
      * @param id - the ID of the user to retrieve
      * @return a ResponseEntity containing the user data
-     * @throws NotFoundException if the user with the specified ID does not exist
      */
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable long id) {
@@ -85,10 +82,9 @@ public class UserController {
      * @param bindingResult - the result of the validation
      * @return a ResponseEntity containing the saved user data
      * @throws ValidationException if validation fails
-     * @throws UnderagePersonException if the new user is under 18 years old
      */
     @PostMapping
-    public ResponseEntity<?> register(
+    public ResponseEntity<UserDto> register(
             @Validated(CreateValidation.class) @RequestBody UserDto userDto,
             BindingResult bindingResult) {
 
@@ -112,10 +108,9 @@ public class UserController {
      * @param bindingResult - the result of the validation
      * @return a ResponseEntity containing the updated user data
      * @throws ValidationException if validation fails
-     * @throws UnderagePersonException if the updated user's birth date makes them under 18 years old
      */
     @PatchMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") long id,
+    public ResponseEntity<UserDto> update(@PathVariable("id") long id,
             @Validated(UpdateValidation.class) @RequestBody UserDto userDto,
             BindingResult bindingResult) {
 
@@ -135,10 +130,9 @@ public class UserController {
      *
      * @param id - the ID of the user to delete
      * @return a ResponseEntity indicating success
-     * @throws NotFoundException if the user does not exist
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") long id) {
+    public ResponseEntity<String> delete(@PathVariable("id") long id) {
         userService.delete(id);
         return ResponseEntity.ok("User was deleted");
     }
